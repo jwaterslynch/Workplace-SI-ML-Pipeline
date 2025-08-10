@@ -1,0 +1,12 @@
+# Python artifacts
+.venv/
+__pycache__/
+*.pyc
+
+# Data: ignore raw archives, keep core JSON + checksums
+data/
+!data/temporal_results.json
+!data/checksums.txt
+
+# Outputs: keep all files
+# (no ignore rule for outputs/, so everything here is tracked)

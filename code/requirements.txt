@@ -1,0 +1,21 @@
+# ── Core dependencies ─────────────────────────────────────
+numpy>=1.23,<2.2          
+pandas>=2.0
+scikit-learn>=1.3
+xgboost>=2.0
+matplotlib>=3.8
+joblib>=1.3
+requests>=2.31
+urllib3>=2.2
+shap>=0.45
+
+# ── Optional extras for Appendix A (classical statistics) ─
+patsy>=0.5
+statsmodels>=0.14
+pygam>=0.9
+dominance-analysis>=1.1.9
+bokeh==2.4.3              
+bambi>=0.13
+cmdstanpy>=1.2 
+ipython<9
+traitlets<6
