@@ -1,10 +1,12 @@
+
 .venv/
 venv/
 env/
 ENV/
-__pycache__/
+**/__pycache__/
 *.pyc
 .DS_Store
+
 python/
 system/
 to/
@@ -12,6 +14,9 @@ the/
 create/
 uses/
 \#/
+data/*
+!data/temporal_results.json
+!data/checksums.txt
 /*.csv
 /*.json
 /*.png
