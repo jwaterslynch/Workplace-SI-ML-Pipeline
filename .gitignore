@@ -10,3 +10,6 @@ data/
 
 # Outputs: keep all files
 # (no ignore rule for outputs/, so everything here is tracked)
+
+.DS_Store
+*.bak
