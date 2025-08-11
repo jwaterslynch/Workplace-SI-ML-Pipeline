@@ -8,12 +8,27 @@
 set -euo pipefail
 trap 'echo -e "\n❌ run_si.sh failed on line $LINENO"; exit 1' ERR
 
-# Always run from the repo directory (the folder that contains this script)
-cd "$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
+# Always run from the repo root (one level up from this script in code/)
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")"/.. && pwd)"
+cd "$REPO_ROOT"
+
+# Choose a Python interpreter
+if [ -x ".venv/bin/python" ]; then
+  PYBIN=".venv/bin/python"
+else
+  PYBIN="$(command -v python3 || true)"
+  if [ -z "$PYBIN" ]; then
+    PYBIN="$(command -v python || true)"
+  fi
+fi
+if [ -z "$PYBIN" ]; then
+  echo "ERROR: No Python interpreter found. Please install Python 3 (e.g., via Xcode CLT or python.org)." >&2
+  exit 1
+fi
 
 # Quick path: verification only (no pipeline re-run)
 if [[ "${1-}" == "verify" ]]; then
-python - <<'PY'
+"$PYBIN" - <<'PY'
 from pathlib import Path
 import json, sys
 
@@ -79,13 +94,14 @@ if [ ! -d ".venv" ]; then
 fi
 # shellcheck source=/dev/null
 source .venv/bin/activate
+PYBIN=".venv/bin/python"
 
 # Upgrade build tools and install deps
-python -m pip install -U pip wheel
-python -m pip install -r code/requirements.txt
+"$PYBIN" -m pip install -U pip wheel
+"$PYBIN" -m pip install -r code/requirements.txt
 
 # Freeze the exact environment for reproducibility
-python -m pip freeze > requirements.lock
+"$PYBIN" -m pip freeze > requirements.lock
 
 # Repro/Determinism knobs (keep training single-threaded across BLAS/OMP libs)
 export OMP_NUM_THREADS=1
@@ -100,8 +116,8 @@ years=("$@")
 if [ ${#years[@]} -eq 0 ]; then years=(2020 2021 2022 2023); fi
 
 # Build the command (string for logs + array for safe execution)
-PIPELINE_CMD_STR="python code/workplace_si_ml_pipeline.py --years ${years[*]} --download --no-plots --seed 42 --save-both-preds --high-spec 0.93 --table3 --nri-idi --export-roc --export-calibration-mlp --compare-spec 0.90 --calibration-stats"
-PIPELINE_CMD=(python code/workplace_si_ml_pipeline.py --years "${years[@]}" --download --no-plots --seed 42 --save-both-preds --high-spec 0.93 --table3 --nri-idi --export-roc --export-calibration-mlp --compare-spec 0.90 --calibration-stats)
+PIPELINE_CMD_STR="$PYBIN code/workplace_si_ml_pipeline.py --years ${years[*]} --download --no-plots --seed 42 --save-both-preds --high-spec 0.93 --table3 --nri-idi --export-roc --export-calibration-mlp --compare-spec 0.90 --calibration-stats"
+PIPELINE_CMD=("$PYBIN" code/workplace_si_ml_pipeline.py --years "${years[@]}" --download --no-plots --seed 42 --save-both-preds --high-spec 0.93 --table3 --nri-idi --export-roc --export-calibration-mlp --compare-spec 0.90 --calibration-stats)
 
 echo "▶️  ${PIPELINE_CMD_STR}"
 mkdir -p outputs/appendix_stats data
@@ -110,7 +126,7 @@ mkdir -p outputs/appendix_stats data
 time "${PIPELINE_CMD[@]}"
 
 # --- Compute data checksums (for reproducibility) ---
-python - <<'PY'
+"$PYBIN" - <<'PY'
 import hashlib, pathlib
 
 root = pathlib.Path("data")
@@ -166,7 +182,7 @@ else:
 PY
 
 # --- Write lightweight provenance metadata (append JSONL) ---
-PIPELINE_CMD="${PIPELINE_CMD_STR}" python - <<'PY'
+PIPELINE_CMD="${PIPELINE_CMD_STR}" "$PYBIN" - <<'PY'
 import json, sys, os, platform, subprocess, datetime, pathlib
 meta = {
     "timestamp": datetime.datetime.now().isoformat(timespec="seconds"),
@@ -199,7 +215,7 @@ print("✓ Wrote outputs/metadata.json")
 PY
 
 # --- Built-in sanity checks (PASS/FAIL summary) ---
-python - <<'PY'
+"$PYBIN" - <<'PY'
 from pathlib import Path
 import json, sys
 
