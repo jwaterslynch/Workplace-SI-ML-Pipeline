@@ -1,0 +1,169 @@
+{
+  "description": "Rolling 3-year window vs single-year training comparison",
+  "method": "Pool raw data from 3 years, retrain XGBoost, test on next year",
+  "model": "XGBoost(max_depth=3, n_estimators=150, scale_pos_weight=auto, seed=42)",
+  "features": [
+    "male",
+    "age",
+    "veteran",
+    "drug_use",
+    "work_hours"
+  ],
+  "test_years": [
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023
+  ],
+  "single_year_auc": [
+    0.7115643556966004,
+    0.6923665844037639,
+    0.6870651092823906,
+    0.6865813284211301,
+    0.708672662049614,
+    0.7116656877853511
+  ],
+  "rolling_3year_auc": [
+    0.721252247319108,
+    0.7075651515228237,
+    0.7034393268010568,
+    0.7029615439507848,
+    0.7307430022948576,
+    0.7200403659287177
+  ],
+  "differences": [
+    0.009687891622507605,
+    0.01519856711905987,
+    0.01637421751866619,
+    0.01638021552965474,
+    0.02207034024524357,
+    0.008374678143366565
+  ],
+  "summary": {
+    "mean_single": 0.6996526212731418,
+    "mean_rolling": 0.7143336063028914,
+    "mean_difference": 0.014680985029749757,
+    "paired_t": 7.182842181861938,
+    "p_value": 0.0008139781398197886
+  },
+  "single_year_details": [
+    {
+      "auc": 0.7115643556966004,
+      "n_train": 20676,
+      "n_train_pos": 1058,
+      "n_test": 20974,
+      "n_test_pos": 1123
+    },
+    {
+      "auc": 0.6923665844037639,
+      "n_train": 20974,
+      "n_train_pos": 1123,
+      "n_test": 20579,
+      "n_test_pos": 1312
+    },
+    {
+      "auc": 0.6870651092823906,
+      "n_train": 20579,
+      "n_train_pos": 1312,
+      "n_test": 12458,
+      "n_test_pos": 686
+    },
+    {
+      "auc": 0.6865813284211301,
+      "n_train": 12458,
+      "n_train_pos": 686,
+      "n_test": 20367,
+      "n_test_pos": 1143
+    },
+    {
+      "auc": 0.708672662049614,
+      "n_train": 20367,
+      "n_train_pos": 1143,
+      "n_test": 21119,
+      "n_test_pos": 1384
+    },
+    {
+      "auc": 0.7116656877853511,
+      "n_train": 21119,
+      "n_train_pos": 1384,
+      "n_test": 19810,
+      "n_test_pos": 1301
+    }
+  ],
+  "rolling_3year_details": [
+    {
+      "auc": 0.721252247319108,
+      "n_train": 61650,
+      "n_train_pos": 2802,
+      "n_test": 20974,
+      "n_test_pos": 1123
+    },
+    {
+      "auc": 0.7075651515228237,
+      "n_train": 62105,
+      "n_train_pos": 3043,
+      "n_test": 20579,
+      "n_test_pos": 1312
+    },
+    {
+      "auc": 0.7034393268010568,
+      "n_train": 62229,
+      "n_train_pos": 3493,
+      "n_test": 12458,
+      "n_test_pos": 686
+    },
+    {
+      "auc": 0.7029615439507848,
+      "n_train": 54011,
+      "n_train_pos": 3121,
+      "n_test": 20367,
+      "n_test_pos": 1143
+    },
+    {
+      "auc": 0.7307430022948576,
+      "n_train": 53404,
+      "n_train_pos": 3141,
+      "n_test": 21119,
+      "n_test_pos": 1384
+    },
+    {
+      "auc": 0.7200403659287177,
+      "n_train": 53944,
+      "n_train_pos": 3213,
+      "n_test": 19810,
+      "n_test_pos": 1301
+    }
+  ],
+  "documented_values": {
+    "source": "ANALYSIS_RESULTS.md",
+    "rolling_3year_auc": [
+      0.725,
+      0.707,
+      0.705,
+      0.711,
+      0.731,
+      0.717
+    ],
+    "single_year_auc": [
+      0.712,
+      0.692,
+      0.687,
+      0.687,
+      0.709,
+      0.712
+    ]
+  },
+  "per_year_n": {
+    "2015": 20519,
+    "2016": 20455,
+    "2017": 20676,
+    "2018": 20974,
+    "2019": 20579,
+    "2020": 12458,
+    "2021": 20367,
+    "2022": 21119,
+    "2023": 19810
+  }
+}

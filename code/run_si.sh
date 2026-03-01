@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # run_si.sh — one-shot runner & verifier for the Suicidal-Ideation-Pipeline
 # Usage:
-#   ./run_si.sh 2020 2021 2022 2023     # full run for these years
-#   ./run_si.sh                         # defaults to 2020–2023
+#   ./run_si.sh 2015 2016 ... 2023      # full run for these years
+#   ./run_si.sh                         # defaults to 2015–2023
 #   ./run_si.sh verify                  # verify outputs only, no re-run
 
 set -euo pipefail
@@ -113,7 +113,7 @@ export PYTHONHASHSEED=0
 
 # Years to run; default to full paper set
 years=("$@")
-if [ ${#years[@]} -eq 0 ]; then years=(2020 2021 2022 2023); fi
+if [ ${#years[@]} -eq 0 ]; then years=(2015 2016 2017 2018 2019 2020 2021 2022 2023); fi
 
 # Build the command (string for logs + array for safe execution)
 PIPELINE_CMD_STR="$PYBIN code/workplace_si_ml_pipeline.py --years ${years[*]} --download --no-plots --seed 42 --save-both-preds --high-spec 0.93 --table3 --nri-idi --export-roc --export-calibration-mlp --compare-spec 0.90 --calibration-stats"
