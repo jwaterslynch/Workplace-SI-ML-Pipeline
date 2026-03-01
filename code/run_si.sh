@@ -55,13 +55,56 @@ expected = [
 ]
 for p in expected: check_file(p)
 
-# Metric tolerances (aligned with paper)
+# Longitudinal metric tolerances (aligned with 2015-2023 paper)
 try:
     j = json.load(open("data/temporal_results.json"))
     auc = float(j["2020_full"]["auc"])
     if abs(auc - 0.8721) > 0.01:
         ok = False
         msgs.append(f"  AUC drift: got {auc:.4f}, expected ~0.8721 (±0.01)")
+
+    expected_years = [str(y) for y in range(2015, 2024)]
+    basic = j.get("basic", {})
+    years = sorted(basic.keys())
+    if years != expected_years:
+        ok = False
+        msgs.append(f"  Year set mismatch: got {years}, expected {expected_years}")
+
+    diag_auc = []
+    off_auc = []
+    diag_n_total = 0
+    for tr in expected_years:
+        row = basic.get(tr, {})
+        for te in expected_years:
+            cell = row.get(te)
+            if not isinstance(cell, dict) or "auc" not in cell:
+                ok = False
+                msgs.append(f"  Missing matrix cell basic[{tr}][{te}]")
+                continue
+            auc_ij = float(cell["auc"])
+            if tr == te:
+                diag_auc.append(auc_ij)
+                diag_n_total += int(cell.get("n_total", 0))
+            else:
+                off_auc.append(auc_ij)
+
+    if diag_n_total != 176957:
+        ok = False
+        msgs.append(f"  Total N mismatch: got {diag_n_total}, expected 176957")
+
+    if len(diag_auc) == 9 and len(off_auc) == 72:
+        same = sum(diag_auc) / len(diag_auc)
+        cross = sum(off_auc) / len(off_auc)
+        gap = same - cross
+        if abs(same - 0.750) > 0.02:
+            ok = False
+            msgs.append(f"  Same-year mean drift: got {same:.3f}, expected ~0.750")
+        if abs(cross - 0.688) > 0.02:
+            ok = False
+            msgs.append(f"  Cross-year mean drift: got {cross:.3f}, expected ~0.688")
+        if abs(gap - 0.062) > 0.02:
+            ok = False
+            msgs.append(f"  Gap drift: got {gap:.3f}, expected ~0.062")
 except Exception as e:
     ok = False
     msgs.append(f"  Could not parse data/temporal_results.json: {e}")
@@ -242,13 +285,56 @@ expected = [
 ]
 for p in expected: check_file(p)
 
-# Metric tolerances (aligned with paper)
+# Longitudinal metric tolerances (aligned with 2015-2023 paper)
 try:
     j = json.load(open("data/temporal_results.json"))
     auc = float(j["2020_full"]["auc"])
     if abs(auc - 0.8721) > 0.01:
         ok = False
         msgs.append(f"  AUC drift: got {auc:.4f}, expected ~0.8721 (±0.01)")
+
+    expected_years = [str(y) for y in range(2015, 2024)]
+    basic = j.get("basic", {})
+    years = sorted(basic.keys())
+    if years != expected_years:
+        ok = False
+        msgs.append(f"  Year set mismatch: got {years}, expected {expected_years}")
+
+    diag_auc = []
+    off_auc = []
+    diag_n_total = 0
+    for tr in expected_years:
+        row = basic.get(tr, {})
+        for te in expected_years:
+            cell = row.get(te)
+            if not isinstance(cell, dict) or "auc" not in cell:
+                ok = False
+                msgs.append(f"  Missing matrix cell basic[{tr}][{te}]")
+                continue
+            auc_ij = float(cell["auc"])
+            if tr == te:
+                diag_auc.append(auc_ij)
+                diag_n_total += int(cell.get("n_total", 0))
+            else:
+                off_auc.append(auc_ij)
+
+    if diag_n_total != 176957:
+        ok = False
+        msgs.append(f"  Total N mismatch: got {diag_n_total}, expected 176957")
+
+    if len(diag_auc) == 9 and len(off_auc) == 72:
+        same = sum(diag_auc) / len(diag_auc)
+        cross = sum(off_auc) / len(off_auc)
+        gap = same - cross
+        if abs(same - 0.750) > 0.02:
+            ok = False
+            msgs.append(f"  Same-year mean drift: got {same:.3f}, expected ~0.750")
+        if abs(cross - 0.688) > 0.02:
+            ok = False
+            msgs.append(f"  Cross-year mean drift: got {cross:.3f}, expected ~0.688")
+        if abs(gap - 0.062) > 0.02:
+            ok = False
+            msgs.append(f"  Gap drift: got {gap:.3f}, expected ~0.062")
 except Exception as e:
     ok = False
     msgs.append(f"  Could not parse data/temporal_results.json: {e}")

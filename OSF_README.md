@@ -32,6 +32,7 @@ If no years are passed, `run_si.sh` defaults to `2015–2023`.
 ## Expected headline metrics
 
 Verification should reproduce values within tolerance:
+- Longitudinal analytic sample (sum of 9 diagonal test-year Ns): 176,957
 - 2020 full model AUC: ~0.872
 - Same-year AUC mean: ~0.750
 - Cross-year AUC mean: ~0.688
