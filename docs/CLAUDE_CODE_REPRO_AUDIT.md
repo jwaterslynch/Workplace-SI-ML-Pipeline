@@ -38,7 +38,7 @@ At the time this protocol was written:
   commit. It should include `a6f8850` (`Make SHAP optional in verifier`) and
   `d9a9a17` (`Document temporal validation toolkit release`). This protocol was
   initially added in `a7df0ef`.
-- Reference model `v0.1.2`: `34f80df` (`Add NSDUH 2024 validation release`)
+- Reference model `v0.1.3`: `8de4f5f` (`Release reference model 0.1.3`)
 - Reference-model artifact source commit: `d2554b6` (`v1.0.4-paper`)
 
 If the remote has moved, record the new commit and say so explicitly. Do not
@@ -65,7 +65,7 @@ git clone https://github.com/jwaterslynch/suicidal-ideation-reference-model.git
 
 git -C Workplace-SI-ML-Pipeline log --oneline --decorate -3
 git -C suicidal-ideation-reference-model log --oneline --decorate -3
-git -C suicidal-ideation-reference-model checkout v0.1.2
+git -C suicidal-ideation-reference-model checkout v0.1.3
 ```
 
 Record:
@@ -398,7 +398,7 @@ du -sh "$RUN_ROOT" "$RUN_ROOT/Workplace-SI-ML-Pipeline" "$RUN_ROOT/suicidal-idea
 df -h "$(dirname "$RUN_ROOT")"
 ```
 
-For the 2024 validation raw parquet files, expected hashes from the v0.1.2
+For the 2024 validation raw parquet files, expected hashes from the v0.1.3
 independent reproduction were:
 
 - `nsduh_2024_data.parquet`:
