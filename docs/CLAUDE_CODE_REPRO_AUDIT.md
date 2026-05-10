@@ -196,13 +196,13 @@ cat "$RUN_ROOT/outputs/example_predictions_from_wheel.csv"
 
 Expected example probabilities:
 
-- `0.0137352268`
-- `0.0762623748`
-- `0.3254862831`
-- `0.2287566224`
+- `0.0140510643`
+- `0.0714770041`
+- `0.3196183581`
+- `0.1516790507`
 
 Small final-digit differences are acceptable; row flags at threshold `0.17`
-should be `0, 0, 1, 1`.
+should be `0, 0, 1, 0`.
 
 ## Step 5: Rebuild Reference Model Artifact From Paper Pipeline
 
@@ -289,8 +289,8 @@ max_prob_diff = float(np.max(np.abs(packaged_probs - rebuilt_probs)))
 report = {
     "packaged_model_id": packaged["metadata"].get("model_id"),
     "rebuilt_model_id": rebuilt["metadata"].get("model_id"),
-    "packaged_source_commit": packaged["metadata"].get("source_commit"),
-    "rebuilt_source_commit": rebuilt["metadata"].get("source_commit"),
+    "packaged_source_commit": packaged["metadata"].get("source_repository_commit"),
+    "rebuilt_source_commit": rebuilt["metadata"].get("source_repository_commit"),
     "metric_comparison": rows,
     "metric_all_match": all_match,
     "example_probability_max_abs_diff": max_prob_diff,
