@@ -34,8 +34,12 @@ At the end, produce a Markdown audit report with:
 
 At the time this protocol was written:
 
-- Paper pipeline `main`: `d9a9a17` (`Document temporal validation toolkit release`)
+- Paper pipeline `main`: use the latest public `main` and record the actual
+  commit. It should include `a6f8850` (`Make SHAP optional in verifier`) and
+  `d9a9a17` (`Document temporal validation toolkit release`). This protocol was
+  initially added in `a7df0ef`.
 - Reference model `v0.1.2`: `34f80df` (`Add NSDUH 2024 validation release`)
+- Reference-model artifact source commit: `d2554b6` (`v1.0.4-paper`)
 
 If the remote has moved, record the new commit and say so explicitly. Do not
 silently mix results from different commits.
@@ -205,13 +209,27 @@ should be `0, 0, 1, 1`.
 This tests whether the packaged reference model can be regenerated from the
 paper-pipeline repository.
 
+The reference-model artifact records paper-pipeline source commit `d2554b6`.
+Use a separate source clone checked out to that commit so metadata, metrics, and
+predictions are all compared against the same source state.
+
+```bash
+cd "$RUN_ROOT"
+git clone https://github.com/jwaterslynch/Workplace-SI-ML-Pipeline.git \
+  Workplace-SI-ML-Pipeline-artifact-source
+git -C Workplace-SI-ML-Pipeline-artifact-source checkout d2554b65ccfb8097761336fa73654beece06c646
+rm -rf Workplace-SI-ML-Pipeline-artifact-source/data
+ln -s "$RUN_ROOT/Workplace-SI-ML-Pipeline/data" \
+  "$RUN_ROOT/Workplace-SI-ML-Pipeline-artifact-source/data"
+```
+
 ```bash
 cd "$RUN_ROOT/suicidal-ideation-reference-model"
 mkdir -p "$RUN_ROOT/outputs/artifact_rebuild"
 
 uv run --extra dev --with requests --with urllib3 --with matplotlib \
   python scripts/build_reference_model.py \
-  --source-repo "$RUN_ROOT/Workplace-SI-ML-Pipeline" \
+  --source-repo "$RUN_ROOT/Workplace-SI-ML-Pipeline-artifact-source" \
   --output-dir "$RUN_ROOT/outputs/artifact_rebuild" \
   2>&1 | tee "$RUN_ROOT/logs/artifact_rebuild.log"
 ```
