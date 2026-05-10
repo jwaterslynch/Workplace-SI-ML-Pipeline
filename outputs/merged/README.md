@@ -1,7 +1,9 @@
-# Suicidal Ideation Prediction Paper - Publication Figures and Tables
+# Suicide Prediction Temporal Validation Toolkit - Publication Figures and Tables
 
 ## Overview
-This directory contains all publication-ready figures and data tables for the merged suicidal ideation prediction paper (2015-2023).
+This directory contains publication-ready figures and data tables for the
+suicidal-ideation prediction paper covering 2015-2023 NSDUH public-use survey
+data for employed U.S. adults.
 
 ## Generated Files
 
@@ -85,9 +87,9 @@ This directory contains all publication-ready figures and data tables for the me
 
 ### 1. Study Population
 - **Period**: 2015-2023 (9 years)
-- **Total patients**: 176,957
+- **Total respondents**: 176,957
 - **Total SI+ cases**: 9,751 (5.51% overall prevalence)
-- **Annual average**: 19,662 patients/year
+- **Annual average**: 19,662 respondents/year
 - **COVID-19 impact**: 2020 sample size reduced to 60% of normal
 
 ### 2. Model Performance
@@ -159,6 +161,6 @@ Annual SI prevalence (%) over the study period with linear trend line (slope = +
 5. All statistical calculations use standard formulas (mean, SD with N-1 denominator)
 
 ---
-**Generated**: February 17, 2026  
-**Script**: generate_figures.py  
+**Generated**: February 17, 2026
+**Script**: pipeline-generated merged output
 **Contact**: See manuscript for corresponding author details

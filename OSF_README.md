@@ -1,69 +1,66 @@
-# Workplace Suicide Ideation — Reproducible Pipeline (2015–2023)
+# Suicide Prediction Temporal Validation Toolkit
 
-This repository is the canonical, one-shot reproducible codebase for the workplace suicidal-ideation paper.
-It downloads NSDUH public-use data, runs the full 9-year analysis (2015–2023), writes all paper artifacts, and verifies headline metrics.
+This OSF component accompanies the GitHub repository and manuscript for:
 
-## One-shot run
+> Machine-Learning Prediction of Suicidal Ideation in Employed U.S. Adults:
+> Temporal Validation and Model Maintenance Across Nine Years of Survey Data
+
+The project provides a reproducible pipeline for evaluating temporal
+transportability and model-maintenance strategies in suicidal-ideation
+prediction using 2015-2023 NSDUH public-use survey data.
+
+## Repository
+
+GitHub: https://github.com/jwaterslynch/Workplace-SI-ML-Pipeline
+
+## Purpose
+
+The repository is a research replication and validation workbench. It downloads
+public-use NSDUH data, recreates the employed-adult analytic sample, trains and
+tests models across all train-year and test-year combinations, and writes the
+figures, tables, predictions, calibration outputs, and provenance metadata used
+for the paper.
+
+## Scope Boundary
+
+This is not a clinical risk assessment product, diagnostic system, individual
+screening tool, employer surveillance tool, or HR analytics product. It is a
+research tool for inspecting temporal validation, model drift, and maintenance
+choices in a high-stakes prediction context.
+
+## Reproduction Commands
+
+From the repository root:
 
 ```bash
-# from repo root
 chmod +x bootstrap.sh code/run_si.sh
 ./bootstrap.sh
 ```
 
-`bootstrap.sh` will:
-1. Create a Python 3.12 virtual environment (`.venv`) via `uv`.
-2. Install pinned dependencies from `requirements.lock` (fallback to `code/requirements.txt`).
-3. Run the full pipeline for years 2015–2023.
-4. Run `verify` checks.
-
-## Manual run
+For verification without retraining:
 
 ```bash
-# full 9-year run
-./code/run_si.sh 2015 2016 2017 2018 2019 2020 2021 2022 2023
-
-# quick artifact/metric verification only (no retraining)
 ./code/run_si.sh verify
 ```
 
-If no years are passed, `run_si.sh` defaults to `2015–2023`.
+Expected verification targets include:
 
-## Expected headline metrics
+- Longitudinal analytic sample: 176,957
+- 2020 full model AUC: approximately 0.872
+- Same-year AUC mean: approximately 0.750
+- Cross-year AUC mean: approximately 0.688
+- Same-year vs cross-year gap: approximately 0.062
 
-Verification should reproduce values within tolerance:
-- Longitudinal analytic sample (sum of 9 diagonal test-year Ns): 176,957
-- 2020 full model AUC: ~0.872
-- Same-year AUC mean: ~0.750
-- Cross-year AUC mean: ~0.688
-- Same-vs-cross gap: ~0.062
+## Key Artifacts
 
-Additional derived/rolling metrics are in `outputs/merged/derived_metrics.json` and `outputs/merged/rolling_window_results.json`.
+- `data/temporal_results.json`: temporal validation matrix and core metrics
+- `data/checksums.txt`: input-data checksums
+- `outputs/metadata.json`: runtime provenance
+- `outputs/merged/`: manuscript-ready figures and tables
+- `outputs/appendix_stats/`: supplemental comparator and robustness outputs
 
-## Key outputs
+## Citation
 
-- `data/temporal_results.json` — train/test matrix + core metrics
-- `data/checksums.txt` — SHA-256 checksums of downloaded inputs
-- `outputs/metadata.json` — runtime provenance (python/packages/platform/git)
-- `outputs/roc_overlay_2020.png` — 2020 ROC figure
-- `outputs/shap_values.png` — SHAP figure
-- `outputs/merged/` — manuscript-ready figures/tables/derived metrics
-
-## Reproducibility notes
-
-- Determinism knobs are set in `code/run_si.sh` (`OMP_NUM_THREADS=1`, fixed seed).
-- Environment is pinned in `requirements.lock`.
-- `verify` mode checks file presence and core metric tolerance without retraining.
-
-## Repository scope
-
-Use this repository as the single source of truth for replication. Legacy folders in the parent manuscript workspace are archival and not canonical for code execution.
-
-## Links
-
-- GitHub: https://github.com/jwaterslynch/Workplace-SI-ML-Pipeline
-- OSF project: https://osf.io/mj2kr/
-
-## License
-
-MIT (see `LICENSE`).
+Use the `CITATION.cff` file in the GitHub repository to cite the software
+release. If using the results or research design, cite the associated paper or
+working paper as well.

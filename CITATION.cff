@@ -1,0 +1,35 @@
+cff-version: 1.2.0
+message: "If you use this software in research, please cite the software release and the associated paper."
+title: "Suicide Prediction Temporal Validation Toolkit"
+type: software
+authors:
+  - family-names: Waters-Lynch
+    given-names: Julian
+    orcid: "https://orcid.org/0000-0002-2422-4864"
+version: "1.0.5-paper"
+date-released: "2026-05-10"
+license: MIT
+url: "https://github.com/jwaterslynch/Workplace-SI-ML-Pipeline"
+repository-code: "https://github.com/jwaterslynch/Workplace-SI-ML-Pipeline"
+abstract: >-
+  Reproducible research pipeline for evaluating temporal transportability,
+  model drift, and model-maintenance strategies in suicidal-ideation prediction
+  across 2015-2023 NSDUH public-use survey data for employed U.S. adults.
+keywords:
+  - suicidal ideation
+  - suicide prediction
+  - temporal validation
+  - model drift
+  - reproducible research
+  - psychiatric epidemiology
+  - machine learning
+preferred-citation:
+  type: article
+  title: "Machine-Learning Prediction of Suicidal Ideation in Employed U.S. Adults: Temporal Validation and Model Maintenance Across Nine Years of Survey Data"
+  authors:
+    - family-names: Waters-Lynch
+      given-names: Julian
+      orcid: "https://orcid.org/0000-0002-2422-4864"
+    - family-names: Timming
+      given-names: Andrew R.
+  year: 2026
