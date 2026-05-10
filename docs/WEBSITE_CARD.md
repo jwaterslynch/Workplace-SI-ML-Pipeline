@@ -19,15 +19,15 @@ maintenance.
 
 An open-source Python pipeline for evaluating temporal transportability in
 suicidal-ideation prediction. The toolkit downloads NSDUH public-use data,
-reconstructs the employed-adult analytic sample, trains and tests models across
-all 2015-2023 train-year and test-year combinations, and generates the
+reconstructs the 176,957-respondent employed-adult analytic sample, trains and
+tests models across all 2015-2023 train-year and test-year combinations, and generates the
 manuscript figures, tables, calibration outputs, threshold audits, and
 provenance metadata.
 
 Built from the machine-learning suicide-prediction paper. The tool is meant for
-replication, methods development, and model-governance research. It is not a
-clinical diagnostic system, individual risk scorer, or employer screening
-product.
+replication, methods development, and model-governance research, with an
+independent reproduction-audit protocol included. It is not a clinical
+diagnostic system, individual risk scorer, or employer screening product.
 
 ## Status
 
@@ -57,19 +57,22 @@ pipeline - Mental-health methods - MIT license
   </div>
   <p>
     An open-source Python pipeline for evaluating temporal transportability in
-    suicidal-ideation prediction. The toolkit reconstructs the employed-adult
-    NSDUH analytic sample, tests models across all 2015-2023 train-year and
-    test-year combinations, and generates paper-ready validation artifacts.
+    suicidal-ideation prediction. The toolkit reconstructs the 176,957-respondent
+    employed-adult NSDUH analytic sample, tests models across all 2015-2023
+    train-year and test-year combinations, and generates paper-ready validation
+    artifacts.
   </p>
   <p>
     Built from the machine-learning suicide-prediction paper. It is a
-    replication and governance research tool, not a clinical diagnostic system,
-    individual risk scorer, or employer screening product.
+    replication and governance research tool with an independent audit protocol,
+    not a clinical diagnostic system, individual risk scorer, or employer
+    screening product.
   </p>
   <div class="meta-row">
     <span class="chip live">Open source</span>
     <span class="chip">Python</span>
     <span class="chip">Temporal validation</span>
+    <span class="chip">176,957 respondents</span>
     <span class="chip">Model drift</span>
     <span class="chip">MIT license</span>
   </div>
