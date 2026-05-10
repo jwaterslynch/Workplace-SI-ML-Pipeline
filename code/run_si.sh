@@ -51,9 +51,13 @@ expected = [
     "outputs/both_model_predictions_2020.csv",
     "outputs/calibration_mlp_2020.json",
     "outputs/appendix_stats/nri_idi.csv",
-    "outputs/shap_values.png",
 ]
 for p in expected: check_file(p)
+
+optional = [
+    "outputs/shap_values.png",  # only generated when the pipeline is run with --shap
+]
+missing_optional = [p for p in optional if not Path(p).is_file()]
 
 # Longitudinal metric tolerances (aligned with 2015-2023 paper)
 try:
@@ -122,6 +126,8 @@ except Exception as e:
 print("\n──────── Verification Summary ────────")
 if ok:
     print("✅ PASS — key artifacts present and metrics within tolerance.")
+    if missing_optional:
+        print("ℹ️  Optional artifacts not present: " + ", ".join(missing_optional))
 else:
     print("❌ FAIL — see details below:")
     for m in msgs:
@@ -281,9 +287,13 @@ expected = [
     "outputs/both_model_predictions_2020.csv",
     "outputs/calibration_mlp_2020.json",
     "outputs/appendix_stats/nri_idi.csv",
-    "outputs/shap_values.png",
 ]
 for p in expected: check_file(p)
+
+optional = [
+    "outputs/shap_values.png",  # only generated when the pipeline is run with --shap
+]
+missing_optional = [p for p in optional if not Path(p).is_file()]
 
 # Longitudinal metric tolerances (aligned with 2015-2023 paper)
 try:
@@ -352,6 +362,8 @@ except Exception as e:
 print("\n──────── Verification Summary ────────")
 if ok:
     print("✅ PASS — key artifacts present and metrics within tolerance.")
+    if missing_optional:
+        print("ℹ️  Optional artifacts not present: " + ", ".join(missing_optional))
 else:
     print("❌ FAIL — see details below:")
     for m in msgs:
